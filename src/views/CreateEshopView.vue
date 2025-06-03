@@ -27,7 +27,7 @@ const saveData = async () => {
 
 <template>
     <h1>Buat Eshop Baru</h1>
-     <form @submit.prevent="saveData">More actions
+     <form @submit.prevent="saveData">
         <div>
             <label>Nama</label>
             <input type="text" v-model="name">
