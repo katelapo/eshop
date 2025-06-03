@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import { RouterLink } from 'vue-router'
 
 interface Eshop {
   id: number;
@@ -25,6 +26,10 @@ onMounted(() => {
 <template>
   <main>
     <div>daftar eshop</div>
+
+     <div>More actions
+      <RouterLink to="/eshop">Buat Eshop</RouterLink>
+    </div>
 
     <div>
       <ul>
