@@ -36,7 +36,7 @@ onMounted(() => {
         <li v-for="eshop in eshops" :key="eshop.id">
           <div>{{ eshop.name }}</div>
           <div>{{ eshop.place }}</div>
-          <div>{{ eshop.time }}</div>
+          <div>{{ new Date(Number(eshop.time) * 1000).toLocaleString() }}</div>
         </li>
       </ul>
     </div>

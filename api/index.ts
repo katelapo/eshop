@@ -9,8 +9,16 @@ export default {
 
         if (url.pathname.startsWith("/api/eshops")) {
 
-            let { results } = await env.DB.prepare("SELECT * FROM eshops").all();
-            return Response.json(results);
+        if (request.method == 'GET') {
+        let { results } = await env.DB.prepare("SELECT * FROM eshops").all();
+        return Response.json(results);
+      } else if (request.method == 'POST') {
+        const newId = crypto.randomUUID()
+        const input = await request.json<any>()
+        const query = `INSERT INTO eshops(id,name,place,time) values ("${newId}","${input.name}","${input.place}",${input.time})`;
+        const newEshop = await env.DB.exec(query);
+        return Response.json(newEshop);
+      }
         }
 
         return env.ASSETS.fetch(request);
