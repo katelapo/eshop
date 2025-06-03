@@ -27,7 +27,7 @@ onMounted(() => {
   <main>
     <div>daftar eshop</div>
 
-     <div>More actions
+     <div>
       <RouterLink to="/eshop">Buat Eshop</RouterLink>
     </div>
 
