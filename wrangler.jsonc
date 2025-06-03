@@ -2,7 +2,15 @@
   "name": "eshop",
   "compatibility_date": "2024-12-30",
   "assets": { 
-    "not_found_handling": "single-page-application"
+    "not_found_handling": "single-page-application",
+    "binding": "ASSETS"
   },
-  "main": "./api/index.ts"
+  "main": "./api/index.ts",
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "eshop",
+      "database_id": "053c5796-fad3-4408-b772-e3a161805220"
+    }
+  ]
 }
