@@ -19,23 +19,54 @@ const saveData = async () => {
         const newEshop = {
             name: name.value,
             place: place.value,
-            time: Math.floor(Date.parse(time.value) / 1000), // Pastikan integer
+            time: Math.floor(Date.parse(time.value) / 1000),
         }
+
+        console.log('Data yang akan dikirim:', newEshop);
+        console.log('JSON yang akan dikirim:', JSON.stringify(newEshop));
 
         const response = await fetch('/api/eshops', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json', // Header penting!
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify(newEshop), // JSON.stringify di sini
+            body: JSON.stringify(newEshop),
         })
 
+        console.log('Response status:', response.status);
+        console.log('Response headers:', response.headers);
+
+        // Cek apakah response adalah JSON
+        const contentType = response.headers.get('content-type');
+        console.log('Content-Type:', contentType);
+
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            // Coba ambil error message dari server
+            let errorMessage = `HTTP error! status: ${response.status}`;
+            try {
+                if (contentType && contentType.includes('application/json')) {
+                    const errorData = await response.json();
+                    errorMessage += ` - ${JSON.stringify(errorData)}`;
+                } else {
+                    const errorText = await response.text();
+                    errorMessage += ` - ${errorText}`;
+                }
+            } catch (e) {
+                console.log('Tidak bisa membaca error response:', e);
+            }
+            throw new Error(errorMessage);
         }
 
-        const data = await response.json()
-        console.log('Data berhasil disimpan:', data);
+        let data;
+        try {
+            data = await response.json();
+        } catch (e) {
+            console.log('Response bukan JSON, menggunakan text:', e);
+            data = await response.text();
+        }
+        
+        console.log('Data response:', data);
+        alert('Data berhasil disimpan!');
         
         // Reset form
         name.value = '';
@@ -44,8 +75,9 @@ const saveData = async () => {
         
         router.push('/');
     } catch (error) {
-        console.error('Error saving data:', error);
-        alert('Gagal menyimpan data. Silakan coba lagi.');
+        console.error('Full error details:', error);
+        const errorMessage = (error instanceof Error) ? error.message : String(error);
+        alert(`Gagal menyimpan data: ${errorMessage}`);
     }
 }
 </script>
