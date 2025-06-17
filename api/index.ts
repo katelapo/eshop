@@ -20,4 +20,29 @@ app.post('/api/eshops', async (c) => {
   return c.json(newEshop)
 })
 
+app.get('/api/eshops/:id', async (c) => {
+  const eshopId = c.req.param('id')
+  let { results } = await c.env.DB.prepare('SELECT * FROM eshops WHERE id = ?').bind(eshopId).all()
+  return c.json(results[0])
+})
+
+app.put('/api/eshops/:id', async (c) => {
+  const eshopId = c.req.param('id')
+
+  const input = await c.req.json<any>()
+  const query = `UPDATE eshops SET name = "${input.name}", place = "${input.place}", time = ${input.time} WHERE id = "${eshopId}"`
+  const eshop = await c.env.DB.exec(query)
+
+  return c.json(eshop)
+})
+
+app.delete('/api/eshops/:id', async (c) => {
+  const eshopId = c.req.param('id')
+
+  const query = `DELETE FROM eshops WHERE id = "${eshopId}"`
+  const eshop = await c.env.DB.exec(query)
+
+  return c.json(eshop)
+})
+
 export default app
