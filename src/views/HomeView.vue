@@ -2,52 +2,52 @@
 import { ref, onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
 
-interface Event {
+interface Eshop {
   id: string
   name: string
   place: string
   time: string
 }
 
-const events = ref<Event[]>([])
+const eshops = ref<Eshop[]>([])
 
-const fetchEvents = async () => {
-  const response = await fetch('/api/events')
+const fetchEshops = async () => {
+  const response = await fetch('/api/eshops')
   const data = await response.json()
-  events.value = data
+  eshops.value = data
 }
 
 onMounted(() => {
-  fetchEvents()
+  fetchEshops()
 })
 
-const removeEvent = async (id: string) => {
-  const response = await fetch(`/api/events/${id}`, {
+const removeEshop = async (id: string) => {
+  const response = await fetch(`/api/eshops/${id}`, {
     method: 'DELETE',
   })
   if (response.ok) {
-    fetchEvents()
+    fetchEshops()
   }
 }
 </script>
 
 <template>
   <main>
-    <div>Daftar Event</div>
+    <div>Daftar Eshop</div>
     <div>
-      <RouterLink to="/event">Buat Event</RouterLink>
+      <RouterLink to="/eshop">Buat Eshop</RouterLink>
     </div>
     <div>
       <ul>
-        <li v-for="event in events" :key="event.id">
-          <div>{{ event.name }}</div>
-          <div>{{ event.place }}</div>
-          <div>{{ new Date(Number(event.time) * 1000).toLocaleString() }}</div>
+        <li v-for="eshop in eshops" :key="eshop.id">
+          <div>{{ eshop.name }}</div>
+          <div>{{ eshop.place }}</div>
+          <div>{{ new Date(Number(eshop.time) * 1000).toLocaleString() }}</div>
           <div>
-            <RouterLink :to="`/event/${event.id}`">Edit</RouterLink>
+            <RouterLink :to="`/eshop/${eshop.id}`">Edit</RouterLink>
           </div>
           <div>
-            <button @click="removeEvent(event.id)">Hapus Data</button>
+            <button @click="removeEshop(eshop.id)">Hapus Data</button>
           </div>
         </li>
       </ul>
