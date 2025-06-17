@@ -42,7 +42,7 @@ onMounted(() => {
 
 <template>
     <div class="container px-4 py-6 mx-auto w-lg">
-        <h1 class="text-lg sm:text-2xl text-center">Edit Event</h1>
+        <h1 class="text-lg sm:text-2xl text-center">Edit Eshop</h1>
         <form @submit.prevent="saveData">
             <div class="w-full">
                 <label>Nama</label>
