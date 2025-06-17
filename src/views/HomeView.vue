@@ -37,6 +37,7 @@ onMounted(() => {
           <div>{{ eshop.name }}</div>
           <div>{{ eshop.place }}</div>
           <div>{{ new Date(Number(eshop.time) * 1000).toLocaleString() }}</div>
+          <div><RouterLink :to="`/eshop/${eshop.id}`">Edit</RouterLink></div>
         </li>
       </ul>
     </div>
