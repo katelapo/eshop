@@ -12,7 +12,7 @@ const place = ref('')
 const time = ref('')
 
 const saveData = async () => {
-    const event = JSON.stringify({
+    const eshop = JSON.stringify({
         name: name.value,
         place: place.value,
         time: Date.parse(time.value)/1000,
@@ -20,7 +20,7 @@ const saveData = async () => {
 
     const response = await fetch(`/api/eshops/${id}`, {
         method:'PUT',
-        body: event,
+        body: eshop,
     })
     const data = await response.json()
 
